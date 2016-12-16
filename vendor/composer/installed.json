@@ -1,0 +1,36 @@
+[
+    {
+        "name": "springdvs/protolib",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "dist": {
+            "type": "path",
+            "url": "/home/cfg/Projects/Spring/php.proto.lib/",
+            "reference": "519c510a556dd5da64474f1125739090a7ec823a",
+            "shasum": null
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "SpringDvs\\": "src/"
+            }
+        },
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Care Connections Initiative c.i.c",
+                "email": "cfg@zunautica.org"
+            }
+        ],
+        "description": "Library for SpringDVS network layer and protocol",
+        "transport-options": {
+            "symlink": true
+        }
+    }
+]

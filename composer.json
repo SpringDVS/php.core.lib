@@ -1,0 +1,32 @@
+{
+  "name": "springdvs/corelib",
+  "description": "Library for the core SpringDVS system",
+  "license": "Apache-2.0",
+  "version": "dev-master",
+  "authors": [
+    {
+      "name": "Care Connections Initiative c.i.c",
+      "email": "cfg@zunautica.org"
+    }
+  ],
+
+ "repositories": [
+        {
+            "type": "path",
+            "url": "/home/cfg/Projects/Spring/php.proto.lib/",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+
+  "require": {
+    "php": ">=5.4.0",
+    "springdvs/protolib": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "SpringDvs\\": "src/"
+    }
+  }
+}
