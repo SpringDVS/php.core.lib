@@ -72,7 +72,7 @@ class Snur {
 	 * 
 	 * @return \SpringDvs\Message|null
 	 */
-	public static function directFirstResponse($message, array $nodes) {
+	public static function requestFirstResponse($message, array $nodes) {
 		
 		$msgstr = self::prepare($message);
 		foreach($nodes as $node) {
@@ -93,7 +93,7 @@ class Snur {
 	}
 
 	/**
-	 * Perform a direct request on a given URI and take the first response
+	 * Perform a request on a given URI and take the first response
 	 *
 	 * This method combines the resolution and request. If any fail it returns
 	 * null otherwise it returns a message
@@ -102,59 +102,10 @@ class Snur {
 	 * @param mixed $message The message to send with as string or \SpringDvs\Message
 	 * @return \SpringDvs\Message|null
 	 */
-	public static function directFirstResponseFromUri($uri, $message, LocalNodeInterface $local) {
+	public static function requestFirstResponseFromUri($uri, $message, LocalNodeInterface $local) {
 		$nodes = self::resolveUri($uri, $local);
 		if(!$nodes) return null;
-		return self::directFirstResponse($message, $nodes);
-	}
-	
-	/**
-	 * Perform a broadcast service request and accept first response
-	 * 
-	 * @param mixed $message The message to send with as string or \SpringDvs\Message
-	 * @param \SpringDvs\Node[] $nodes
-	 * @return \SpringDvs\Message[]|NULL
-	 */
-	public static function broadcastFirstResponse($message, array $nodes) {
-		
-		$msgstr = self::prepare($message);
-
-		foreach($nodes as $node) {
-			$responseHttp = Http::postRequest($node->hostfield(), $msg);
-			if(!$responseHttp){ continue; }
-			
-			try {
-				$responseMessage = \SpringDvs\Message::fromStr($responseHttp);
-				if(!$responseMessage->getContentResponse()->isOk()) {
-					continue;
-				}
-			} catch(\Exception $e) {
-				continue;
-			}
-			
-			if($responseMessage->getContentResponse()->type() != ContentResponse::ServiceMulti) {
-				break; // This is not a correct response to a broadcast request
-			}
-			$offset = $responseMessage->getContentResponse()->offset();
-			return ContentResponse::parseServiceMulti($responseHttp, $offset);
-		}
-		return [];
-	}
-	
-	/**
-	 * Perform a broadcast service request on the give URI
-	 * 
-	 * This method combines the resolution and request. If any fail it returns
-	 * null otherwise it returns an array of messages
-	 * 
-	 * @param unknown $message
-	 * @param LocalNodeInterface $local
-	 * @return \SpringDvs\Message[]|null
-	 */
-	public static function broadcastFirstResponseFromUri($uri, $message, LocalNodeInterface $local) {
-		$nodes = self::resolveUri($uri, $local);
-		if(!$nodes) return null;
-		return self::broadcastFirstResponse($message, $nodes);
+		return self::requestFirstResponse($message, $nodes);
 	}
 
 	/**
