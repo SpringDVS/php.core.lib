@@ -1,4 +1,8 @@
 <?php
+/* Notice:  Copyright 2017, The Care Connections Initiative c.i.c.
+ * Authors: Charlie Fyvie-Gauld <cfg@zunautica.org>
+ * License: Apache License, Version 2 (http://www.apache.org/licenses/LICENSE-2.0)
+ */
 namespace SpringDvs\Core;
 
 interface LocalNodeInterface {
@@ -57,4 +61,12 @@ interface LocalNodeInterface {
 	 * @return mixed The unique ID of the node
 	 */
 	public function nodeid();
+	
+	
+	/**
+	 * Get the primary regional node(s) for this local node
+	 * 
+	 * @return \SpringDvs\Node[] The primary node(s) 
+	 */
+	public function primary();
 }
