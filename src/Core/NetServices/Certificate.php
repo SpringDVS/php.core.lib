@@ -1,4 +1,8 @@
 <?php
+/* Notice:  Copyright 2017, The Care Connections Initiative c.i.c.
+ * Authors: Charlie Fyvie-Gauld <cfg@zunautica.org>
+ * License: Apache License, Version 2 (http://www.apache.org/licenses/LICENSE-2.0)
+ */
 namespace SpringDvs\Core\NetServices;
 use SpringDvs\Core\NetServices\Key as Key;
 
@@ -33,6 +37,11 @@ class Signature {
 
 /**
  * An GPG/OpenPGP certificate representation
+ * 
+ * In terms of the network's software -- the certificate is an expanded
+ * public key. While a Key is an ascii armor form of a key. This
+ * implements the interface for a key since a certificate contains
+ * a key.
  */
 class Certificate implements Key {
 	/**
