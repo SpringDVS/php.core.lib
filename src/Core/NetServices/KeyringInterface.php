@@ -132,7 +132,7 @@ interface KeyringInterface {
 	/**
 	 * Get the number of certificates in the keyring (not inc. local node's)
 	 * 
-	 * @return integer total number of certificates
+	 * @return integer Total number of certificates
 	 */
 	public function getCertificateCount();
 }
