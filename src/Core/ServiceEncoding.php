@@ -20,7 +20,7 @@ class ServiceEncoding {
 	 * @return string The complete response message
 	 */
 	public static function text($content) {
-		$text = "service/text $response";
+		$text = "service/text $content";
 		$len = strlen($text);
 		return "200 $len $text";
 	}
@@ -35,7 +35,7 @@ class ServiceEncoding {
 	 * @param LocalNodeInterface $local Local node details
 	 * @return string The complete response message
 	 */
-	public static function json(array $content, LocalNodeInterface $local) {
-		return self::text(json_encode([$local->uri() => $content]));
+	public static function json(array $content, LocalNodeInterface $localNode) {
+		return self::text(json_encode([$localNode->uri() => $content]));
 	}
 }

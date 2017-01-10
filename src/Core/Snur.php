@@ -26,7 +26,7 @@ class Snur {
 	 * @param \SpringDvs\Core\LocalNodeInterface The local node object
 	 * @return array(\SpringDvs\INodeNetInterface) | false
 	 */
-	public static function resolveUri($uri, LocalNodeInterface $local) {
+	public function resolveUri($uri, LocalNodeInterface $local) {
 		
 		if(substr($uri,0,9) != 'spring://'){ $uri = "spring://$uri"; }
 		$message = Message::fromStr("resolve $uri");
@@ -72,9 +72,9 @@ class Snur {
 	 * 
 	 * @return \SpringDvs\Message|null
 	 */
-	public static function requestFirstResponse($message, array $nodes) {
+	public function requestFirstResponse($message, array $nodes) {
 		
-		$msgstr = self::prepare($message);
+		$msgstr = $this->prepare($message);
 		foreach($nodes as $node) {
 			$responseHttp = Http::postRequest($node->hostfield(), $msgstr);
 			if(!$responseHttp){ continue; }
@@ -102,10 +102,10 @@ class Snur {
 	 * @param mixed $message The message to send with as string or \SpringDvs\Message
 	 * @return \SpringDvs\Message|null
 	 */
-	public static function requestFirstResponseFromUri($uri, $message, LocalNodeInterface $local) {
-		$nodes = self::resolveUri($uri, $local);
+	public function requestFirstResponseFromUri($uri, $message, LocalNodeInterface $local) {
+		$nodes = $this->resolveUri($uri, $local);
 		if(!$nodes) return null;
-		return self::requestFirstResponse($message, $nodes);
+		return $this->requestFirstResponse($message, $nodes);
 	}
 
 	/**
@@ -114,7 +114,7 @@ class Snur {
 	 * @param mixed $message Message is either string or \SpringDvs\Message
 	 * @return string
 	 */
-	private static function prepare($message) {
+	private function prepare($message) {
 		if( is_string($message) ) {
 			return $message;
 		} else if($message instanceof \SpringDvs\Message) {

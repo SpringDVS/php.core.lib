@@ -100,4 +100,13 @@ class Bulletin implements BulletinHeader  {
 	public function content() {
 		return $this->content;
 	}
+	
+	/**
+	 * Create a bulletin that demonstrates an error
+	 * 
+	 * @return \SpringDvs\Core\NetServices\Bulletin The constructed bulletin
+	 */
+	public static function error($errorTitle) {
+		return new Bulletin("#error", $errorTitle, [], []);
+	}
 }

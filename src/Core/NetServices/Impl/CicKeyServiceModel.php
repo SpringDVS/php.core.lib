@@ -3,7 +3,9 @@
  * Authors: Charlie Fyvie-Gauld <cfg@zunautica.org>
  * License: Apache License, Version 2 (http://www.apache.org/licenses/LICENSE-2.0)
  */
-namespace SpringDvs\Core\NetServices;
+namespace SpringDvs\Core\NetServices\Impl;
+
+use SpringDvs\Core\NetServices\KeyServiceInterface;
 
 /**
  * Model for interacting CICs secure key service interface

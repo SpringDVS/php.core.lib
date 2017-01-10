@@ -35,6 +35,7 @@ class Signature {
 	}
 }
 
+
 /**
  * An GPG/OpenPGP certificate representation
  * 
@@ -145,6 +146,30 @@ class Certificate implements Key {
 	 */
 	public function signatures() {
 		return $this->signatures;
+	}
+	
+	/**
+	 * Get the array of keyids that have signed certificate
+	 * 
+	 * @return string[] The keyids that signed certificate
+	 */
+	public function signatureKeyids() {
+		$sigs = [];
+		foreach($this->signatures as $sig) {
+			$sigs[] = $sig->keyid;
+		}
+		
+		return $sigs;
+	}
+	
+	public function signatureString() {
+		$comma = count($this->signatures);
+
+		$out = '';
+		foreach($this->signatures as $sig) {
+			$out .= $sig->keyid . (--$comma > 0 ? ',' : '');
+		}
+		return $out;
 	}
 	
 	/**
