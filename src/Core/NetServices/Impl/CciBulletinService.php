@@ -12,7 +12,7 @@ use SpringDvs\Core\NetServices\BulletinReaderInterface;
  * can easily be plugged into a web system, especially using
  * the SpringDvs\Core\NetServiceHandler
  */
-class CicBulletinService
+class CciBulletinService
 implements NetServiceInterface
 {
 	

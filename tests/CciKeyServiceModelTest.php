@@ -1,5 +1,5 @@
 <?php
-use SpringDvs\Core\NetServices\Impl\CicKeyServiceModel;
+use SpringDvs\Core\NetServices\Impl\CciKeyServiceModel;
 use SpringDvs\Core\NetServices\Certificate;
 use SpringDvs\Core\NetServices\Key;
 
@@ -128,10 +128,10 @@ heyKwv3j5pC/bw2m27l+uogidnDcUb4=
 
 
 
-class CicKeyServiceModelTest
+class CciKeyServiceModelTest
 extends MockReady {
 	public function testKeyGen() {
-		$pks = new CicKeyServiceModel();
+		$pks = new CciKeyServiceModel();
 		
 		$pair = $pks->generateKeyPair('foo', 'foo@example.com', 'pass');
 		
@@ -144,7 +144,7 @@ extends MockReady {
 	
 	public function testExpandKey() {
 		global $publicKeyBarfoo;
-		$pks = new CicKeyServiceModel();
+		$pks = new CciKeyServiceModel();
 		$cert = $pks->expand(new Key($publicKeyBarfoo));	
 		$this->assertNotNull($cert);
 		$this->assertEquals('Barfoo', $cert->name());
@@ -159,7 +159,7 @@ extends MockReady {
 	
 	public function testImportNoSubject() {
 		global $publicKeyFoobar;
-		$pks = new CicKeyServiceModel();
+		$pks = new CciKeyServiceModel();
 		$cert = $pks->expand(new Key($publicKeyFoobar));
 		$this->assertNotNull($cert);
 		$this->assertEquals('Foobar', $cert->name());
@@ -176,7 +176,7 @@ extends MockReady {
 		global $publicKeyBarfoo;
 		global $privateKeyFoobar;
 
-		$pks = new CicKeyServiceModel();
+		$pks = new CciKeyServiceModel();
 		$key = $pks->sign(new Certificate($publicKeyBarfoo), new Key($privateKeyFoobar), 'passphrase');
 		$this->assertNotNull($key);
 	}
@@ -185,7 +185,7 @@ extends MockReady {
 		global $publicKeyBarfoo;
 		global $privateKeyFoobar;
 		
-		$pks = new CicKeyServiceModel();
+		$pks = new CciKeyServiceModel();
 		$oldCertificate = new Certificate($publicKeyBarfoo);
 		$newKey = $pks->sign($oldCertificate, new Key($privateKeyFoobar), 'passphrase');
 		$this->assertNotNull($newKey);

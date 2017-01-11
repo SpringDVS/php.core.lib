@@ -13,7 +13,7 @@ use SpringDvs\Core\NetServices\Signature;
  * Model for interacting CICs secure key service interface
  *
  */
-class CicKeyServiceModel implements KeyServiceInterface {
+class CciKeyServiceModel implements KeyServiceInterface {
 
 	private $service;
 	
@@ -61,10 +61,10 @@ class CicKeyServiceModel implements KeyServiceInterface {
 		$response = $this->performRequest($body);
 		
 		// Check if valid
-		if(!$response){ return false; }
+		if(!$response){ return null; }
 		foreach($response as $k => $v) {
 			if($k == 'sigs'){ continue; } // Skip signatures as my be empty
-			if($v == "") return false; // The rest need something in them
+			if($v == "") return null; // The rest need something in them
 		}
 		
 		$signatures = [];

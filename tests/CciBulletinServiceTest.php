@@ -6,7 +6,7 @@ require 'MessageDecoder.php';
 use SpringDvs\Core\NetServices\Bulletin;
 
 
-class CicBulletinServiceTest
+class CciBulletinServiceTest
 extends MockReady
 {
 
@@ -25,7 +25,7 @@ extends MockReady
 					->with($this->equalTo('1001'))
 					->willReturn(new Bulletin('1001', 'Title', ['tag1','tag2'],[],"Content"));
 		
-		$service  = new SpringDvs\Core\NetServices\Impl\CicBulletinService($reader, $node);
+		$service  = new SpringDvs\Core\NetServices\Impl\CciBulletinService($reader, $node);
 		
 		
 		$response = MessageDecoder::jsonServiceText($service->run(['bulletin','1001'], [], $node));
@@ -55,7 +55,7 @@ extends MockReady
 					->method('withUid')
 					->with($this->equalTo('1002'));
 
-		$service  = new SpringDvs\Core\NetServices\Impl\CicBulletinService($reader, $node);
+		$service  = new SpringDvs\Core\NetServices\Impl\CciBulletinService($reader, $node);
 		$response = MessageDecoder::jsonServiceText($service->run(['bulletin','1002'], [], $node));
 		
 		$this->assertEquals('alpha.venus.uk', key($response));
@@ -78,7 +78,7 @@ extends MockReady
 					->with([])
 					->willReturn($this->generateBulletinHeaders(5));
 		
-		$service  = new SpringDvs\Core\NetServices\Impl\CicBulletinService($reader, $node);
+		$service  = new SpringDvs\Core\NetServices\Impl\CciBulletinService($reader, $node);
 		$response = MessageDecoder::jsonServiceText($service->run(['bulletin'], [], $node));
 		
 		$this->assertEquals('alpha.venus.uk', key($response));
@@ -111,7 +111,7 @@ extends MockReady
 					->with(['limit' => '10'])
 					->willReturn($this->generateBulletinHeaders(7));
 	
-		$service  = new SpringDvs\Core\NetServices\Impl\CicBulletinService($reader, $node);
+		$service  = new SpringDvs\Core\NetServices\Impl\CciBulletinService($reader, $node);
 		$response = MessageDecoder::jsonServiceText($service->run(['bulletin'], ['limit' => '10'], $node));
 	
 		$this->assertEquals('alpha.venus.uk', key($response));
@@ -144,7 +144,7 @@ extends MockReady
 			->with(['categories' => 'Foo'])
 			->willReturn($this->generateBulletinHeaders(5));
 	
-		$service  = new SpringDvs\Core\NetServices\Impl\CicBulletinService($reader,$node);
+		$service  = new SpringDvs\Core\NetServices\Impl\CciBulletinService($reader,$node);
 		$response = MessageDecoder::jsonServiceText($service->run(['bulletin'], ['categories' => 'Foo'], $node));
 	
 		$this->assertEquals('alpha.venus.uk', key($response));
@@ -177,7 +177,7 @@ extends MockReady
 			->with(['tags' => 'foo'])
 			->willReturn($this->generateBulletinHeaders(5));
 	
-		$service  = new SpringDvs\Core\NetServices\Impl\CicBulletinService($reader,$node);
+		$service  = new SpringDvs\Core\NetServices\Impl\CciBulletinService($reader,$node);
 		$response = MessageDecoder::jsonServiceText($service->run(['bulletin'], ['tags' => 'foo'], $node));
 	
 		$this->assertEquals('alpha.venus.uk', key($response));
@@ -210,7 +210,7 @@ extends MockReady
 			->with([])
 			->willReturn($this->generateBulletinHeaders(0));
 	
-		$service  = new SpringDvs\Core\NetServices\Impl\CicBulletinService($reader,$node);
+		$service  = new SpringDvs\Core\NetServices\Impl\CciBulletinService($reader,$node);
 		$response = MessageDecoder::jsonServiceText($service->run(['bulletin'], [], $node));
 	
 		$this->assertEquals('alpha.venus.uk', key($response));

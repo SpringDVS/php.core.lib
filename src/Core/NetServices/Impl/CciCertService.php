@@ -15,7 +15,7 @@ use SpringDvs\Core\NetServices\CertificatePullInterface;
 use SpringDvs\Core\NetServices\KeyServiceInterface;
 
 
-class CicCertService
+class CciCertService
 implements NetServiceInterface, CertificatePullInterface
 {
 	/**
