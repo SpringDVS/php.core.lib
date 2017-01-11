@@ -218,12 +218,7 @@ extends MockReady
 	
 		$this->assertCount(0, $headers);
 	}
-	
-	private function stdLocalNodeInterfaceUri(&$node) {
-		$node->expects($this->once())
-			->method('uri')
-			->willReturn('alpha.venus.uk');
-	}
+
 	
 	private function generateBulletinHeaders($count) {
 		$headers = [];

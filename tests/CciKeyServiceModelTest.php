@@ -130,6 +130,10 @@ heyKwv3j5pC/bw2m27l+uogidnDcUb4=
 
 class CciKeyServiceModelTest
 extends MockReady {
+	
+	/**
+	 * @group online
+	 */
 	public function testKeyGen() {
 		$pks = new CciKeyServiceModel();
 		
@@ -142,6 +146,9 @@ extends MockReady {
 		$this->assertNotEquals('', $pair['private']);
 	}
 	
+	/**
+	 * @group online
+	 */
 	public function testExpandKey() {
 		global $publicKeyBarfoo;
 		$pks = new CciKeyServiceModel();
@@ -157,6 +164,9 @@ extends MockReady {
 		$this->assertEquals('AC093447D6F8889F', $sigs[0]->keyid);
 	}
 	
+	/**
+	 * @group online
+	 */
 	public function testImportNoSubject() {
 		global $publicKeyFoobar;
 		$pks = new CciKeyServiceModel();
@@ -171,7 +181,10 @@ extends MockReady {
 	
 		$this->assertEquals('D193ECD630086ED1', $sigs[0]->keyid);
 	}
-	
+
+	/**
+	 * @group online
+	 */
 	public function testSign() {
 		global $publicKeyBarfoo;
 		global $privateKeyFoobar;
@@ -181,6 +194,9 @@ extends MockReady {
 		$this->assertNotNull($key);
 	}
 	
+	/**
+	 * @group online
+	 */
 	public function testSignImport() {
 		global $publicKeyBarfoo;
 		global $privateKeyFoobar;

@@ -1,5 +1,6 @@
 <?php
-namespace \SpringDvs\Core\NetServices\Impl;
+namespace SpringDvs\Core\NetServices\Impl;
+
 use SpringDvs\Core\NetServiceInterface;
 use SpringDvs\Core\NetServices\KeyringInterface;
 use SpringDvs\Core\NetServiceKeyStore;
@@ -13,6 +14,7 @@ use SpringDvs\Message;
 use SpringDvs\Core\Notification;
 use SpringDvs\Core\NetServices\CertificatePullInterface;
 use SpringDvs\Core\NetServices\KeyServiceInterface;
+use SpringDvs\Core\NetServices\Key;
 
 
 class CciCertService
@@ -71,18 +73,20 @@ implements NetServiceInterface, CertificatePullInterface
 	 * @see \SpringDvs\Core\NetServiceInterface::run()
 	 */
 	public function run($uriPath, $uriQuery) {
-		$branch = isset($uriPath[1]) ? $uriPath : null;
-	
+		$branch = isset($uriPath[1]) ? $uriPath[1] : null;
+
 		switch($branch) {
 			case null:
 				return $this->getCertificate();
+
 			case 'key':
 				return $this->getKey();
+
 			case 'pull':
 				$keyid = isset($uriPath[2])
 							? $uriPath[2]
 							: null;
-				return $this->pullRequest($keyid);
+				return $this->pull($keyid);
 			case 'pullreq':
 				$source = isset($uriQuery['source'])
 							? $uriQuery['source']
@@ -140,7 +144,9 @@ implements NetServiceInterface, CertificatePullInterface
 		if($this->kvs->get('cert.notify')) {
 			return $this->notify($source);
 		} else {
-			return $this->performPull($source);
+			return $this->performPull($source)
+						? ServiceEncoding::json(['result' => 'ok'], $this->node)
+						: ServiceEncoding::json(['result' => 'error'], $this->node);
 		}
 	}
 	
@@ -150,15 +156,14 @@ implements NetServiceInterface, CertificatePullInterface
 			return ServiceEncoding::json(['result' => 'queued'], $this->node);
 		}
 
-		$action = $this->kvs('cert.pullreqaction');
+		$action = $this->kvs->get('cert.pullreqaction');
 		$message = "$source is requesting an update to your public certificate";
 		
 		$nid = $this->notif->registerNotification(new Notification('Certifcate Pull Request',
 																   $action,
-																   $source,
+																   'cert',
 																   $message));
-		
-		$this->store->addData($tag, $store);
+		$this->store->addData($tag, $source);
 		
 		$this->notif->activateNotification($nid);
 		return ServiceEncoding::json(['result' => 'ok'], $this->node);
@@ -169,17 +174,20 @@ implements NetServiceInterface, CertificatePullInterface
 	 * @see \SpringDvs\Core\NetServices\CertificatePullInterface::performPull()
 	 */
 	public function performPull($source) {
+		
 		$keyid = $this->keyring->getNodeKeyid();
 		$uri = "spring://$source";
+
 		try {
-			$response = $this->snur->requestFirstResponseFromUri($uri, "service $uri/cert/pull/$keyid", $local);
+			$response = $this->snur->requestFirstResponseFromUri($uri, "service $uri/cert/pull/$keyid", $this->node);
+			if(!$response){ return false; }
 			$pulled = json_decode($response->getContentResponse()->getServiceText()->get());
 			$obj = reset($pulled);
-			$key = (isset($obj['key']) && $obj['key'] != "error")
-						? new Certificate($obj['key'])
+			$key = (isset($obj->key) && $obj->key != "error")
+						? new Key($obj->key)
 						: null;
 			
-			if(!$key){ return false; }
+			if($key === null){ return false; }
 			
 			
 			$subject = $this->keyring->getNodePublicKey();

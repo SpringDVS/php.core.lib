@@ -6,6 +6,8 @@ use SpringDvs\Core\Snur;
 use SpringDvs\Core\NetServices\KeyringInterface;
 use SpringDvs\Core\DataStoreInterface;
 use SpringDvs\Core\NetServiceKeyStore;
+use SpringDvs\Core\NotificationInterface;
+use SpringDvs\Core\NetServices\KeyServiceInterface;
 
 class MockReady extends TestCase {
 	
@@ -46,7 +48,7 @@ class MockReady extends TestCase {
 				'getKey', 'getResolvedCertificate',
 				'getUidList', 'getUidName',
 				'getPrivateKey', 'hasCertificate',
-				'getCertificateCount'
+				'getCertificateCount','hasPrivateKey'
 		];
 		return $this->getMockBuilder(KeyringInterface::class)
 						->setMethods($methods)
@@ -90,5 +92,11 @@ class MockReady extends TestCase {
 		return $this->getMockBuilder(NotificationInterface::class)
 						->setMethods($methods)
 						->getMock();
+	}
+	
+	protected function stdLocalNodeInterfaceUri(&$node) {
+		$node->expects($this->once())
+		->method('uri')
+		->willReturn('alpha.venus.uk');
 	}
 }

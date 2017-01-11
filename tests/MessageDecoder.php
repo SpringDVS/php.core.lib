@@ -22,6 +22,11 @@ class MessageDecoder {
 		return json_decode(self::extractServiceText($str));
 	}
 	
+
+	public static function jsonServiceTextStripNode($str) {
+		$v =  json_decode(self::extractServiceText($str));
+		return reset($v);
+	}
 	/**
 	 * Decode byte sequence into message
 	 * @param unknown $str
