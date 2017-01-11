@@ -2,7 +2,7 @@
 use PHPUnit\Framework\TestCase;
 use SpringDvs\Core\Snur;
 use SpringDvs\Core\LocalNodeInterface;
-use SpringDvs\Core\NetServices\BulletinServiceInterface;
+use SpringDvs\Core\NetServices\BulletinManagerServiceInterface;
 
 use SpringDvs\Core\NetServices\KeyringInterface;
 use SpringDvs\Core\NetServices\KeyringServiceInterface;
@@ -28,11 +28,11 @@ class MockReady extends TestCase {
 			->getMock();
 	}
 	
-	protected function mockBulletinServiceInterface() {
+	protected function mockBulletinManagerServiceInterface() {
 		$methods = [
 			'withUid', 'withFilters'
 		];
-		return $this->getMockBuilder(BulletinServiceInterface::class)
+		return $this->getMockBuilder(BulletinManagerServiceInterface::class)
 			->setMethods($methods)
 			->getMock();
 	}

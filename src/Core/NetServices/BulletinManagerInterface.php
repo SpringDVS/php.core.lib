@@ -9,8 +9,8 @@ use SpringDvs\Core\NetServices\BulletinServiceInterface;
 /**
  * Interface for interacting with a bulletin repo
  */
-interface BulletinRepositoryInterface
-extends BulletinServiceInterface
+interface BulletinManagerInterface
+extends BulletinManagerServiceInterface
 {
 	
 	/**

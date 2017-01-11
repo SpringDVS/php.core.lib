@@ -6,7 +6,7 @@ namespace SpringDvs\Core\NetServices;
  * from with a public facing network service
  *
  */
-interface BulletinServiceInterface {
+interface BulletinManagerServiceInterface {
 	/**
 	 * Get the bulletins with given filters
 	 *

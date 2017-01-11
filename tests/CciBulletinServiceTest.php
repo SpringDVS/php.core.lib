@@ -15,7 +15,7 @@ extends MockReady
 	 * 		alpha.venus.uk/bulletin/1001
 	 */
 	public function testRequestUidSuccess() {
-		$reader = $this->mockBulletinServiceInterface();
+		$reader = $this->mockBulletinManagerServiceInterface();
 		$node = $this->mockLocalNodeInterface();
 		
 		$this->stdLocalNodeInterfaceUri($node);
@@ -47,7 +47,7 @@ extends MockReady
 	 * 		alpha.venus.uk/bulletin/1002
 	 */
 	public function testRequestUidFailureNoUid() {
-		$reader = $this->mockBulletinServiceInterface();
+		$reader = $this->mockBulletinManagerServiceInterface();
 		$node = $this->mockLocalNodeInterface();
 		$this->stdLocalNodeInterfaceUri($node);
 		
@@ -69,7 +69,7 @@ extends MockReady
 	 * 		alpha.venus.uk/bulletin/
 	 */
 	public function testRequestHeadersNoFilters() {
-		$reader = $this->mockBulletinServiceInterface();
+		$reader = $this->mockBulletinManagerServiceInterface();
 		$node = $this->mockLocalNodeInterface();
 		$this->stdLocalNodeInterfaceUri($node);
 		
@@ -102,7 +102,7 @@ extends MockReady
 	 * 		alpha.venus.uk/bulletin/?limit=10
 	 */
 	public function testRequestHeadersLimitFilter() {
-		$reader = $this->mockBulletinServiceInterface();
+		$reader = $this->mockBulletinManagerServiceInterface();
 		$node = $this->mockLocalNodeInterface();
 		$this->stdLocalNodeInterfaceUri($node);
 	
@@ -135,7 +135,7 @@ extends MockReady
 	 * 		alpha.venus.uk/bulletin/?categories=Foo
 	 */
 	public function testRequestHeadersCategoriesFilter() {
-		$reader = $this->mockBulletinServiceInterface();
+		$reader = $this->mockBulletinManagerServiceInterface();
 		$node = $this->mockLocalNodeInterface();
 		$this->stdLocalNodeInterfaceUri($node);
 
@@ -168,7 +168,7 @@ extends MockReady
 	 * 		alpha.venus.uk/bulletin/?tags=foo
 	 */
 	public function testRequestHeadersTagsFilter() {
-		$reader = $this->mockBulletinServiceInterface();
+		$reader = $this->mockBulletinManagerServiceInterface();
 		$node = $this->mockLocalNodeInterface();
 		$this->stdLocalNodeInterfaceUri($node);
 	
@@ -201,7 +201,7 @@ extends MockReady
 	 * 		alpha.venus.uk/bulletin/
 	 */
 	public function testRequestHeadersOnEmptyRepo() {
-		$reader = $this->mockBulletinServiceInterface();
+		$reader = $this->mockBulletinManagerServiceInterface();
 		$node = $this->mockLocalNodeInterface();
 		$this->stdLocalNodeInterfaceUri($node);
 	
