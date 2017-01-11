@@ -10,14 +10,18 @@ class NetServiceKeyStore {
 	
 	public function get($key) {
 		$part = explode('.', $key);
-		$storage = $this->map[$part[0]];
-		$variable = $part[1];
-		
-		if(!isset($this->map[$storage])
-		|| !is_callable([$storage, $variable])) {
+		if(count($part) != 2) {
 			return null;
 		}
 
-		return $storage->$variable;
+		$module = $part[0];
+		$variable = $part[1];
+		
+		if(!isset($this->map[$module])
+		|| !is_callable([$this->map[$module], $variable])) {
+			return null;
+		}
+		
+		return $this->map[$module]->$variable();
 	}
 }

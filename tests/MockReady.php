@@ -2,6 +2,10 @@
 use \SpringDvs\Core\LocalNodeInterface;
 use SpringDvs\Core\NetServices\BulletinReaderInterface;
 use PHPUnit\Framework\TestCase;
+use SpringDvs\Core\Snur;
+use SpringDvs\Core\NetServices\KeyringInterface;
+use SpringDvs\Core\DataStoreInterface;
+use SpringDvs\Core\NetServiceKeyStore;
 
 class MockReady extends TestCase {
 	
@@ -20,5 +24,71 @@ class MockReady extends TestCase {
 		return $this->getMockBuilder(BulletinReaderInterface::class)
 					->setMethods(['withUid', 'withFilters'])
 					->getMock();
+	}
+	
+	protected function mockSnur() {
+		$methods = [
+				'resolveUri', 'requestFirstResponse',
+				'requestFirstResponseFromUri'
+		];
+		return $this->getMockBuilder(Snur::class)
+					->setMethods($methods)
+					->getMock();
+	}
+	
+	protected function mockKeyringInterface() {
+		$methods = [
+				'getNodePublicKey', 'getNodePrivateKey',
+				'getNodeCertificate', 'getNodeKeyid',
+				'resetNodeKeys', 'setNodeCertificate',
+				'setNodePrivate', 'setCertificate',
+				'getCertificate', 'removeCertificate',
+				'getKey', 'getResolvedCertificate',
+				'getUidList', 'getUidName',
+				'getPrivateKey', 'hasCertificate',
+				'getCertificateCount'
+		];
+		return $this->getMockBuilder(KeyringInterface::class)
+						->setMethods($methods)
+						->getMock();
+	}
+	
+	protected function mockKeyServiceInterface() {
+		$methods = [
+				'generateKeyPair', 'import',
+				'expand', 'sign',
+		];
+		return $this->getMockBuilder(KeyServiceInterface::class)
+						->setMethods($methods)
+						->getMock();
+	}
+	
+	protected function mockDataStoreInterface() {
+		$methods = [
+				'getAllDataFromTag', 'getDataFromId',
+				'addData', 'removeDataWithId',
+				'dataExists'
+		];
+		return $this->getMockBuilder(DataStoreInterface::class)
+						->setMethods($methods)
+						->getMock();
+	}
+	
+	protected function mockNetServiceKeyStore() {
+		$methods = [
+				'registerStorage', 'get',
+		];
+		return $this->getMockBuilder(NetServiceKeyStore::class)
+						->setMethods($methods)
+						->getMock();
+	}
+	
+	protected function mockNotificationInterface() {
+		$methods = [
+				'registerNotification', 'activateNotification'
+		];
+		return $this->getMockBuilder(NotificationInterface::class)
+						->setMethods($methods)
+						->getMock();
 	}
 }

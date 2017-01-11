@@ -4,37 +4,6 @@
  * License: Apache License, Version 2 (http://www.apache.org/licenses/LICENSE-2.0)
  */
 namespace SpringDvs\Core\NetServices;
-use SpringDvs\Core\NetServices\Key as Key;
-
-/**
- * A signature for a certificate
- */
-class Signature {
-	/**
-	 * @var string The key ID of the signature
-	 */
-	public $keyid;
-	
-	/**
-	 * @var string The resolved name attached to the key ID (if any)
-	 */
-	public $name;
-	
-	/**
-	 * Create a new signature
-	 * 
-	 * There will always be a key ID, but if a name is not
-	 * resolved it defaults to 'unknown'.
-	 * 
-	 * @param string $keyid The key ID
-	 * @param string $name The name associated with the key
-	 */
-	public function __construct($keyid, $name = 'unknown') {
-		$this->keyid = $keyid;
-		$this->name = $name;
-	}
-}
-
 
 /**
  * An GPG/OpenPGP certificate representation
@@ -44,7 +13,8 @@ class Signature {
  * implements the interface for a key since a certificate contains
  * a key.
  */
-class Certificate implements Key {
+class Certificate
+extends Key {
 	/**
 	 * @var string The name on the certificate
 	 */
@@ -68,16 +38,6 @@ class Certificate implements Key {
 	private $signatures;
 	
 	/**
-	 * @var string The ASCII armor of the certificate or key
-	 */
-	private $armor;
-	
-	/**
-	 * @var boolean Whether certificate is owned by node
-	 */
-	private $owned;
-	
-	/**
 	 * Construct a certificate object with given details
 	 * 
 	 * @param string $armor The armor of the certificate
@@ -88,29 +48,13 @@ class Certificate implements Key {
 	 * @param Signature[] $signatures An array of signatures (if any)
 	 */
 	public function __construct($armor, $owned = false, $name = null, $email = null, $keyid = null, $signatures = []) {
-		$this->armor = $armor;
+		parent::__construct($armor, $owned);
 		$this->uidName = $name;
 		$this->uidEmail = $email;
 		$this->keyId = $keyid;
 		$this->signatures = $signatures;
-		$this->owned = $owned;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see \SpringDvs\Core\NetServices\Key::armor()
-	 */
-	public function armor() {
-		return $this->armor;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @see \SpringDvs\Core\NetServices\Key::owned()
-	 */
-	public function owned() {
-		return $this->owned;
-	}
 
 	/**
 	 * Get the name on the certificate
@@ -171,10 +115,6 @@ class Certificate implements Key {
 		}
 		return $out;
 	}
-	
-	/**
-	 * Check if key is owned by node
-	 * @return boolean True if owned
-	 */
+
 
 }

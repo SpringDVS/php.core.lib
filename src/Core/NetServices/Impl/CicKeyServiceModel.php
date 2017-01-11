@@ -6,7 +6,9 @@
 namespace SpringDvs\Core\NetServices\Impl;
 
 use SpringDvs\Core\NetServices\KeyServiceInterface;
-
+use SpringDvs\Core\NetServices\Certificate;
+use SpringDvs\Core\NetServices\Key;
+use SpringDvs\Core\NetServices\Signature;
 /**
  * Model for interacting CICs secure key service interface
  *
@@ -33,11 +35,9 @@ class CicKeyServiceModel implements KeyServiceInterface {
 
 		$response =  $this->performRequest($body);
 		
-		if(!$reponse || $response['public'] == "" || $response['private'] == "") {
+		if(!$response || $response['public'] == "" || $response['private'] == "") {
 			return null;
 		}
-		
-		$keys[];
 		
 		$keys['public'] = new Certificate($response['public'], true);
 		$keys['private'] = new Certificate($response['private'], true);
@@ -97,7 +97,7 @@ class CicKeyServiceModel implements KeyServiceInterface {
 						  $passphrase) {
 		$body = "SIGN\n{$passphrase}\nPUBLIC {\n{$certificate->armor()}\n}\nPRIVATE {\n{$key->armor()}\n}\n";
 		$response = $this->performRequest($body);
-		if(!$reponse || $response['public'] == "") {
+		if(!$response || $response['public'] == "") {
 			return null;
 		}
 

@@ -17,19 +17,38 @@ namespace SpringDvs\Core\NetServices;
  * decode it into a GPG/OpenPGP certificate)
  *
  */
-interface Key {
+class Key {
 	
+	
+	/**
+	 * @var string The ASCII armor of the certificate or key
+	 */
+	protected $armor;
+	
+	/**
+	 * @var boolean Whether certificate is owned by node
+	 */
+	protected $owned;
+
+	public function __construct($armor, $owned = false) {
+		$this->armor = $armor;
+		$this->owned = $owned;
+	}
 	/**
 	 * Get the ASCII armor of the key
 	 * 
 	 * @return string The ASCII armor
 	 */
-	public function armor();
+	public function armor() {
+		return $this->armor;
+	}
 	
 	/**
 	 * Check if key is owned by node
 	 * @return boolean True if owned
 	 */
-	public function owned();
+	public function owned() {
+		return $this->owned;
+	}
 	
 }
