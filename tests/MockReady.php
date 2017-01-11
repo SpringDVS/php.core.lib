@@ -10,18 +10,22 @@ use SpringDvs\Core\DataStoreInterface;
 use SpringDvs\Core\NetServiceKeyStore;
 use SpringDvs\Core\NotificationInterface;
 use SpringDvs\Core\NetServices\KeyServiceInterface;
+use SpringDvs\Core\NetServices\OrgProfileManagerServiceInterface;
 
 class MockReady extends TestCase {
 	
 	protected function mockLocalNodeInterface() {
+		$methods = [
+				'uri','springname',
+				'regional','top',
+			    'hostname','hostpath',
+				'hostfield','nodeid',
+				'primary'
+		];
+		
 		return $this->getMockBuilder(LocalNodeInterface::class)
-					->setMethods(['uri','springname',
-								  'regional','top',
-							      'hostname','hostpath',
-								  'hostfield','nodeid',
-								  'primary'
-								])
-					->getMock();
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function mockBulletinServiceInterface() {
@@ -29,8 +33,8 @@ class MockReady extends TestCase {
 			'withUid', 'withFilters'
 		];
 		return $this->getMockBuilder(BulletinServiceInterface::class)
-					->setMethods($methods)
-					->getMock();
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function mockSnur() {
@@ -39,8 +43,8 @@ class MockReady extends TestCase {
 				'requestFirstResponseFromUri'
 		];
 		return $this->getMockBuilder(Snur::class)
-					->setMethods($methods)
-					->getMock();
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function mockKeyringInterface() {
@@ -56,8 +60,8 @@ class MockReady extends TestCase {
 				'getCertificateCount','hasPrivateKey'
 		];
 		return $this->getMockBuilder(KeyringInterface::class)
-						->setMethods($methods)
-						->getMock();
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function mockKeyringServiceInterface() {
@@ -77,8 +81,8 @@ class MockReady extends TestCase {
 				'expand', 'sign',
 		];
 		return $this->getMockBuilder(KeyServiceInterface::class)
-						->setMethods($methods)
-						->getMock();
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function mockDataStoreInterface() {
@@ -88,8 +92,8 @@ class MockReady extends TestCase {
 				'dataExists'
 		];
 		return $this->getMockBuilder(DataStoreInterface::class)
-						->setMethods($methods)
-						->getMock();
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function mockNetServiceKeyStore() {
@@ -97,8 +101,8 @@ class MockReady extends TestCase {
 				'registerStorage', 'get',
 		];
 		return $this->getMockBuilder(NetServiceKeyStore::class)
-						->setMethods($methods)
-						->getMock();
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function mockNotificationInterface() {
@@ -106,13 +110,22 @@ class MockReady extends TestCase {
 				'registerNotification', 'activateNotification'
 		];
 		return $this->getMockBuilder(NotificationInterface::class)
-						->setMethods($methods)
-						->getMock();
+			->setMethods($methods)
+			->getMock();
+	}
+	
+	protected function mockOrgProfileServiceInterface() {
+		$methods = [
+				'getProfile'
+		];
+		return $this->getMockBuilder(OrgProfileManagerServiceInterface::class)
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function stdLocalNodeInterfaceUri(&$node) {
 		$node->expects($this->once())
-		->method('uri')
-		->willReturn('alpha.venus.uk');
+			->method('uri')
+			->willReturn('alpha.venus.uk');
 	}
 }
