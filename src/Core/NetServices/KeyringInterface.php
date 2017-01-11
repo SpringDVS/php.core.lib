@@ -5,12 +5,13 @@
  */
 namespace SpringDvs\Core\NetServices;
 
-interface KeyringInterface {
+interface KeyringInterface
+extends KeyringServiceInterface {
+
 
 	/**
-	 * Get the public key of the local node
-	 * 
-	 * @return \SpringDvs\Core\NetServices\Key | null
+	 * {@inheritDoc}
+	 * @see \SpringDvs\Core\NetServices\KeyringPublicInterface::getNodePublicKey()
 	 */
 	public function getNodePublicKey();
 	
@@ -23,16 +24,14 @@ interface KeyringInterface {
 	public function getNodePrivateKey();
 	
 	/**
-	 * Get the public key certificate of the local node
-	 * 
-	 * @return \SpringDvs\Core\NetServices\Certificate | null
+	 * {@inheritDoc}
+	 * @see \SpringDvs\Core\NetServices\KeyringPublicInterface::getNodeCertificate()
 	 */
 	public function getNodeCertificate();
 	
 	/**
-	 * Get the public key ID of the local node
-	 * 
-	 *  @return string
+	 * {@inheritDoc}
+	 * @see \SpringDvs\Core\NetServices\KeyringPublicInterface::getNodeKeyid()
 	 */
 	public function getNodeKeyid();
 	
@@ -43,11 +42,10 @@ interface KeyringInterface {
 	 */
 	public function resetNodeKeys();
 	
+
 	/**
-	 * Set the certificate for the local node
-	 * 
-	 * @param \SpringDvs\Core\NetServices\Certificate $certificate
-	 * @return void
+	 * {@inheritDoc}
+	 * @see \SpringDvs\Core\NetServices\KeyringPublicInterface::setNodeCertificate()
 	 */
 	public function setNodeCertificate(\SpringDvs\Core\NetServices\Certificate $certificate);
 	
@@ -84,10 +82,8 @@ interface KeyringInterface {
 	public function removeCertificate($keyid);
 	
 	/**
-	 * Get the key with the given key ID
-	 * 
-	 * @param string $keyid The key ID to search for
-	 * @return \SpringDvs\Core\NetServices\Key | null
+	 * {@inheritDoc}
+	 * @see \SpringDvs\Core\NetServices\KeyringPublicInterface::getKey()
 	 */
 	public function getKey($keyid);
 	

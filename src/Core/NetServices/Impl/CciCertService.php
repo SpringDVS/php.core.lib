@@ -2,7 +2,7 @@
 namespace SpringDvs\Core\NetServices\Impl;
 
 use SpringDvs\Core\NetServiceInterface;
-use SpringDvs\Core\NetServices\KeyringInterface;
+use SpringDvs\Core\NetServices\KeyringServiceInterface;
 use SpringDvs\Core\NetServiceKeyStore;
 use SpringDvs\Core\Snur;
 use SpringDvs\Core\DataStoreInterface;
@@ -21,7 +21,7 @@ class CciCertService
 implements NetServiceInterface, CertificatePullInterface
 {
 	/**
-	 * @var \SpringDvs\Core\NetServices\KeyringInterface The keyring
+	 * @var \SpringDvs\Core\NetServices\KeyringServiceInterface The keyring
 	 */
 	private $keyring;
 	
@@ -55,7 +55,7 @@ implements NetServiceInterface, CertificatePullInterface
 	 */
 	private $notif;
 	
-	public function __construct(KeyringInterface $keyring, NetServiceKeyStore $kvs,
+	public function __construct(KeyringServiceInterface $keyring, NetServiceKeyStore $kvs,
 								DataStoreInterface $store, NotificationInterface $notif,
 								LocalNodeInterface $node, KeyServiceInterface $kservice,
 								Snur $snur) {

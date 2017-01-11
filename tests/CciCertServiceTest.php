@@ -27,7 +27,7 @@ extends MockReady
 	
 	protected function setUp() {
 		parent::setUp();
-		$this->mKeyring = $this->mockKeyringInterface();
+		$this->mKeyring = $this->mockKeyringServiceInterface();
 		$this->mKvs = $this->mockNetServiceKeyStore();
 		$this->mStore = $this->mockDataStoreInterface();
 		$this->mNotif = $this->mockNotificationInterface();

@@ -5,7 +5,7 @@ use SpringDvs\Core\LocalNodeInterface;
 use SpringDvs\Core\NetServiceInterface;
 use SpringDvs\Core\ServiceEncoding;
 use SpringDvs\Core\NetServices\Bulletin as Bulletin;
-use SpringDvs\Core\NetServices\BulletinReaderInterface;
+use SpringDvs\Core\NetServices\BulletinServiceInterface;
 
 /**
  * The canonical implementation of the Bulletin service which
@@ -17,7 +17,7 @@ implements NetServiceInterface
 {
 	
 	/**
-	 * @var SpringDvs\Core\NetServices\BulletinReaderInterface The bulletin repository
+	 * @var SpringDvs\Core\NetServices\BulletinServiceInterface The bulletin repository
 	 */
 	private $repo;
 	
@@ -29,10 +29,10 @@ implements NetServiceInterface
 	/**
 	 * Initialise the service with a reader interface on the repo
 	 * 
-	 * @param BulletinReaderInterface $repo The repository to use
+	 * @param BulletinServiceInterface $repo The repository to use
 	 * @param LocalNodeInterface $node The local node
 	 */
-	public function __construct(BulletinReaderInterface $repo, LocalNodeInterface $node) {
+	public function __construct(BulletinServiceInterface $repo, LocalNodeInterface $node) {
 		$this->repo = $repo;
 		$this->node = $node;
 	}

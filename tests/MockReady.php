@@ -1,9 +1,11 @@
 <?php
-use \SpringDvs\Core\LocalNodeInterface;
-use SpringDvs\Core\NetServices\BulletinReaderInterface;
 use PHPUnit\Framework\TestCase;
 use SpringDvs\Core\Snur;
+use SpringDvs\Core\LocalNodeInterface;
+use SpringDvs\Core\NetServices\BulletinServiceInterface;
+
 use SpringDvs\Core\NetServices\KeyringInterface;
+use SpringDvs\Core\NetServices\KeyringServiceInterface;
 use SpringDvs\Core\DataStoreInterface;
 use SpringDvs\Core\NetServiceKeyStore;
 use SpringDvs\Core\NotificationInterface;
@@ -22,9 +24,12 @@ class MockReady extends TestCase {
 					->getMock();
 	}
 	
-	protected function mockBulletinReaderInterface() {
-		return $this->getMockBuilder(BulletinReaderInterface::class)
-					->setMethods(['withUid', 'withFilters'])
+	protected function mockBulletinServiceInterface() {
+		$methods = [
+			'withUid', 'withFilters'
+		];
+		return $this->getMockBuilder(BulletinServiceInterface::class)
+					->setMethods($methods)
 					->getMock();
 	}
 	
@@ -53,6 +58,17 @@ class MockReady extends TestCase {
 		return $this->getMockBuilder(KeyringInterface::class)
 						->setMethods($methods)
 						->getMock();
+	}
+	
+	protected function mockKeyringServiceInterface() {
+		$methods = [
+				'getNodePublicKey','getNodeCertificate', 
+				'getNodeKeyid','setNodeCertificate',
+				'getKey'
+		];
+		return $this->getMockBuilder(KeyringServiceInterface::class)
+			->setMethods($methods)
+			->getMock();
 	}
 	
 	protected function mockKeyServiceInterface() {

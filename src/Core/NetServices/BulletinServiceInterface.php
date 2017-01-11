@@ -1,7 +1,12 @@
 <?php
 namespace SpringDvs\Core\NetServices;
 
-interface BulletinReaderInterface {
+/**
+ * Interface for interacting with the bulletin repository
+ * from with a public facing network service
+ *
+ */
+interface BulletinServiceInterface {
 	/**
 	 * Get the bulletins with given filters
 	 *
