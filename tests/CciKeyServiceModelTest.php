@@ -133,6 +133,7 @@ extends MockReady {
 	
 	/**
 	 * @group online
+	 * @group long
 	 */
 	public function testKeyGen() {
 		$pks = new CciKeyServiceModel();
@@ -148,6 +149,7 @@ extends MockReady {
 	
 	/**
 	 * @group online
+	 * @group long
 	 */
 	public function testExpandKey() {
 		global $publicKeyBarfoo;
@@ -166,6 +168,7 @@ extends MockReady {
 	
 	/**
 	 * @group online
+	 * @group long
 	 */
 	public function testImportNoSubject() {
 		global $publicKeyFoobar;
@@ -184,6 +187,7 @@ extends MockReady {
 
 	/**
 	 * @group online
+	 * @group long
 	 */
 	public function testSign() {
 		global $publicKeyBarfoo;
@@ -196,6 +200,7 @@ extends MockReady {
 	
 	/**
 	 * @group online
+	 * @group long
 	 */
 	public function testSignImport() {
 		global $publicKeyBarfoo;

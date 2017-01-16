@@ -12,9 +12,9 @@ extends MockReady {
 		$kvs = new NetServiceKeyStore();
 		$ekvs = $this->mockExampleKeyStore();
 		$ekvs->expects($this->once())
-				->method('primary')
-				->withAnyParameters()
-				->willReturn('foobar');
+			->method('primary')
+			->withAnyParameters()
+			->willReturn('foobar');
 		
 		$kvs->registerStorage('example', $ekvs);
 		
@@ -25,7 +25,7 @@ extends MockReady {
 		$kvs = new NetServiceKeyStore();
 		$ekvs = $this->mockExampleKeyStore();
 		$ekvs->expects($this->never())
-				->method('primary');
+			->method('primary');
 
 		$kvs->registerStorage('example', $ekvs);
 	
@@ -36,7 +36,7 @@ extends MockReady {
 		$kvs = new NetServiceKeyStore();
 		$ekvs = $this->mockExampleKeyStore();
 		$ekvs->expects($this->never())
-		->method('primary');
+			->method('primary');
 	
 		$kvs->registerStorage('example', $ekvs);
 	
@@ -47,13 +47,59 @@ extends MockReady {
 		$kvs = new NetServiceKeyStore();
 		$ekvs = $this->mockExampleKeyStore();
 		$ekvs->expects($this->never())
-				->method('primary');
+			->method('primary');
 
 		$kvs->registerStorage('example', $ekvs);
 	
 		$this->assertNull($kvs->get('invalid'));
 	}
 	
+	public function testSetKeySuccessful() {
+		$kvs = new NetServiceKeyStore();
+		$ekvs = $this->mockExampleKeyStore();
+		$ekvs->expects($this->once())
+			->method('primary')
+			->with(1001)
+			->willReturn(true);
+		
+		$kvs->registerStorage('example', $ekvs);
+	
+		$this->assertTrue($kvs->set('example.primary', 1001));
+	}
+
+	public function testSetKeyBadModuleSub() {
+		$kvs = new NetServiceKeyStore();
+		$ekvs = $this->mockExampleKeyStore();
+		$ekvs->expects($this->never())
+			->method('primary');
+
+		$kvs->registerStorage('example', $ekvs);
+	
+		$this->assertFalse($kvs->set('inavlid.primary', 1001));
+	}
+
+	public function testSetKeyBadModuleBadKeySub() {
+		$kvs = new NetServiceKeyStore();
+		$ekvs = $this->mockExampleKeyStore();
+		$ekvs->expects($this->never())
+			->method('primary');
+	
+		$kvs->registerStorage('example', $ekvs);
+	
+		$this->assertFalse($kvs->set('example.secondary', 1001));
+	}
+	
+	public function testSetKeyBadModuleBadKey() {
+		$kvs = new NetServiceKeyStore();
+		$ekvs = $this->mockExampleKeyStore();
+		$ekvs->expects($this->never())
+			->method('primary');
+		
+		$kvs->registerStorage('example', $ekvs);
+	
+		$this->assertFalse($kvs->set('example', 1001));
+	}
+
 	private function mockExampleKeyStore() {
 		return $this->getMockBuilder(ExampleKeyStore::class)
 				->setMethods(['primary'])

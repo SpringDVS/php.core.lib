@@ -34,6 +34,7 @@ class Snur {
 		$responseMessage = null;
 		$responseType = null;
 		foreach($local->primary() as $primary) {
+
 			$responseHttp = Http::postRequest($primary->hostField(),
 	   										  $message->toStr());
 			if($responseHttp === false){ continue; }
@@ -76,7 +77,7 @@ class Snur {
 		
 		$msgstr = $this->prepare($message);
 		foreach($nodes as $node) {
-			$responseHttp = Http::postRequest($node->hostfield(), $msgstr);
+			$responseHttp = Http::postRequest($node->hostField(), $msgstr);
 			if(!$responseHttp){ continue; }
 			
 			try {

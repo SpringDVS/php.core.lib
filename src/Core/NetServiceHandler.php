@@ -63,7 +63,7 @@ class NetServiceHandler extends NetServiceRouter {
 		
 		
 		$response = call_user_func($service, $uriPath, $uriQuery, $this->localNode);
-		if(!is_string($response)){ return "122"; } // service failed to respond correctly
+		if(!is_string($response)){ return "105"; } // service failed to respond correctly -- internal error
 		
 		return $response;
 	}

@@ -24,4 +24,22 @@ class NetServiceKeyStore {
 		
 		return $this->map[$module]->$variable();
 	}
+	
+	public function set($key, $value) {
+		$part = explode('.', $key);
+		if(count($part) != 2) {
+			return false;
+		}
+		
+		$module = $part[0];
+		$variable = $part[1];
+		
+		if(!isset($this->map[$module])
+				|| !is_callable([$this->map[$module], $variable])) {
+					return false;
+				}
+		
+		$this->map[$module]->$variable($value);
+		return true;
+	}
 }

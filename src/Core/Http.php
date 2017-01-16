@@ -18,9 +18,10 @@ class Http {
 	 * @return string The response from the post request
 	 */
 	public static function postRequest($hostfield, $message, $secure = false) {
-		$response = self::runRequest('https://'.$host.'/spring/', $message);
+		$response = self::runRequest('https://'.$hostfield.'/spring/', $message);
+		
 		if(!$response && !$secure) {
-			$response = self::runRequest('http://'.$host.'/spring/', $message);
+			$response = self::runRequest('http://'.$hostfield.'/spring/', $message);
 		}
 		return $response;
 	}
