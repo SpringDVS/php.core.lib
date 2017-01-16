@@ -39,7 +39,6 @@ class NetServiceKeyStore {
 					return false;
 				}
 		
-		$this->map[$module]->$variable($value);
-		return true;
+		return $this->map[$module]->$variable($value);
 	}
 }
