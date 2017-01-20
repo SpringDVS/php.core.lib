@@ -11,6 +11,7 @@ use SpringDvs\Core\NetServiceKeyStore;
 use SpringDvs\Core\NotificationInterface;
 use SpringDvs\Core\NetServices\KeyServiceInterface;
 use SpringDvs\Core\NetServices\OrgProfileManagerServiceInterface;
+use SpringDvs\Core\NetServiceViewLoader;
 
 class MockReady extends TestCase {
 	
@@ -127,5 +128,14 @@ class MockReady extends TestCase {
 		$node->expects($this->once())
 			->method('uri')
 			->willReturn('alpha.venus.uk');
+	}
+	
+	protected function mockNetServiceViewLoader() {
+		$methods = [
+				'load'
+		];
+		return $this->getMockBuilder(NetServiceViewLoader::class)
+			->setMethods($methods)
+			->getMock();
 	}
 }

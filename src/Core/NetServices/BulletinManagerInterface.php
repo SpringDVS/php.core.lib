@@ -23,7 +23,7 @@ extends BulletinManagerServiceInterface
 	 * {@inheritDoc}
 	 * @see \SpringDvs\Core\NetServices\BulletinReaderInterface::withUid()
 	 */
-	public function withUid($uid);
+	public function withUid($uid, $attributes = array());
 	
 	/**
 	 * Add a new bulletin to the repository

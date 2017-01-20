@@ -1,6 +1,7 @@
 <?php
 use SpringDvs\Core\NetServiceHandler;
 use SpringDvs\Uri;
+use SpringDvs\Core\ServiceEncoding;
 
 require '../vendor/autoload.php';
 
@@ -105,6 +106,51 @@ extends MockReady
 		});
 
 		$actual = $this->handler->run($uri);
+		$this->assertEquals($expected, $actual);
+	}
+	
+	/**
+	 * Test a stripped empty error response from a service
+	 */
+	public function testSuccessfulServiceStrippedErrorEmpty() {
+		$expected  = '105';
+		$uri = new Uri('spring://alpha.venus.uk/testpoint');
+	
+		$this->handler->register('testpoint', function() {
+			return '105';
+		});
+	
+		$actual = $this->handler->run($uri, ['response' => 'stripped']);
+		$this->assertEquals($expected, $actual);
+	}
+
+	/**
+	 * Test a stripped empty ok response from a service
+	 */
+	public function testSuccessfulServiceStrippedOkEmpty() {
+		$expected  = '200';
+		$uri = new Uri('spring://alpha.venus.uk/testpoint');
+	
+		$this->handler->register('testpoint', function() {
+			return '200';
+		});
+	
+			$actual = $this->handler->run($uri, ['response' => 'stripped']);
+			$this->assertEquals($expected, $actual);
+	}
+	/**
+	 * Test a stripped empty response from a service
+	 */
+	public function testSuccessfulServiceStrippedFull() {
+		$expected  = 'text response';
+		
+		$uri = new Uri('spring://alpha.venus.uk/testpoint');
+	
+		$this->handler->register('testpoint', function() {
+			return ServiceEncoding::text('text response');
+		});
+	
+		$actual = $this->handler->run($uri, ['response' => 'stripped']);
 		$this->assertEquals($expected, $actual);
 	}
 	
