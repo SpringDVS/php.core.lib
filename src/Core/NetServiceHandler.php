@@ -18,16 +18,6 @@ use SpringDvs\Message;
  *
  */
 class NetServiceHandler extends NetServiceRouter {
-	
-	/**
-	 * @var \SpringDvs\Core\LocalNodeInterface The local node
-	 */
-	private $localNode;
-	
-	public function __construct(LocalNodeInterface $localNode) {
-		$this->localNode = $localNode;
-	}
-	
 	/**
 	 * Run a service requested in the URI
 	 * 
@@ -45,7 +35,7 @@ class NetServiceHandler extends NetServiceRouter {
 	 * @param string[] $attributes The attributes
 	 * @return string The response/error from the service
 	 */
-	public function run(Uri $uri, $attributes = []) {
+	public function run(Uri $uri, $attributes, LocalNodeInterface $localNode) {
 		
 		$uriPath = $uri->res();
 		
@@ -59,7 +49,7 @@ class NetServiceHandler extends NetServiceRouter {
 		
 		$module = $uriPath[0];
 		
-		if(reset($uri->route()) != $this->localNode->springname()) {
+		if(reset($uri->route()) != $localNode->springname()) {
 			return "103"; //  Network error -- it's not the right node
 		}
 		$service = $this->getService($module);
@@ -69,7 +59,7 @@ class NetServiceHandler extends NetServiceRouter {
 		}
 		
 		
-		$response = call_user_func($service, $uriPath, $uriQuery, $this->localNode);
+		$response = call_user_func($service, $uriPath, $uriQuery, $localNode);
 		
 		// ToDo: Handle binary data here
 		if(!is_string($response)){ return "105"; } // service failed to respond correctly -- internal error

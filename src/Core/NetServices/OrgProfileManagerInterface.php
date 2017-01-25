@@ -7,7 +7,7 @@ use SpringDvs\Core\NetServices\OrgProfileManagerServiceInterface;
  * Interface for interacting with the Org Profile
  * manager
  */
-interface OrgProfileServiceInterface
+interface OrgProfileManagerInterface
 extends OrgProfileManagerServiceInterface {
 	
 	/**

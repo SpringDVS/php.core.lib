@@ -30,7 +30,7 @@ extends MockReady
 			->withAnyParameters()
 			->willReturn('alpha');
 		
-		$this->handler = new NetServiceHandler($this->node);
+		$this->handler = new NetServiceHandler();
 	}
 	
 
@@ -45,7 +45,7 @@ extends MockReady
 			return '200';
 		});
 		
-		$actual = $this->handler->run($uri);
+		$actual = $this->handler->run($uri,[],$this->node);
 		$this->assertEquals($expected, $actual);
 	}
 	
@@ -60,7 +60,7 @@ extends MockReady
 			return '200';
 		});
 	
-		$actual = $this->handler->run($uri);
+		$actual = $this->handler->run($uri,[],$this->node);
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -75,7 +75,7 @@ extends MockReady
 			return '200';
 		});
 	
-		$actual = $this->handler->run($uri);
+		$actual = $this->handler->run($uri,[],$this->node);
 		$this->assertEquals($expected, $actual);
 	}
 	
@@ -90,7 +90,7 @@ extends MockReady
 			return false;
 		});
 	
-			$actual = $this->handler->run($uri);
+			$actual = $this->handler->run($uri,[],$this->node);
 			$this->assertEquals($expected, $actual);
 	}
 	
@@ -105,7 +105,7 @@ extends MockReady
 			return '200';
 		});
 
-		$actual = $this->handler->run($uri);
+		$actual = $this->handler->run($uri,[],$this->node);
 		$this->assertEquals($expected, $actual);
 	}
 	
@@ -120,7 +120,7 @@ extends MockReady
 			return '105';
 		});
 	
-		$actual = $this->handler->run($uri, ['response' => 'stripped']);
+		$actual = $this->handler->run($uri, ['response' => 'stripped'], $this->node);
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -135,7 +135,7 @@ extends MockReady
 			return '200';
 		});
 	
-			$actual = $this->handler->run($uri, ['response' => 'stripped']);
+			$actual = $this->handler->run($uri, ['response' => 'stripped'], $this->node);
 			$this->assertEquals($expected, $actual);
 	}
 	/**
@@ -150,7 +150,7 @@ extends MockReady
 			return ServiceEncoding::text('text response');
 		});
 	
-		$actual = $this->handler->run($uri, ['response' => 'stripped']);
+		$actual = $this->handler->run($uri, ['response' => 'stripped'], $this->node);
 		$this->assertEquals($expected, $actual);
 	}
 	
@@ -172,7 +172,7 @@ extends MockReady
 			return '104';
 		});
 	
-		$actual = $this->handler->run($uri);
+		$actual = $this->handler->run($uri,[],$this->node);
 		$this->assertEquals($expected, $actual);
 	}
 }

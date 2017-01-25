@@ -8,7 +8,7 @@ namespace SpringDvs\Core\NetServices;
 interface OrgProfileManagerServiceInterface {
 	/**
 	 * Get the profile of the organisation
-	 * @return \SpringDvs\Core\NetServices\OrgProfile The profile
+	 * @return \SpringDvs\Core\NetServices\OrgProfile|null The profile
 	 */
 	public function getProfile();
 }

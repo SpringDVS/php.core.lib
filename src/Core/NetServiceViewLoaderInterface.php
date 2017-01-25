@@ -6,7 +6,7 @@ namespace SpringDvs\Core;
  * views from the larger system
  *
  */
-interface NetServiceViewLoader {
+interface NetServiceViewLoaderInterface {
 	/**
 	 * Get the rendered version of a view
 	 *  

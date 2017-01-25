@@ -6,7 +6,7 @@ use SpringDvs\Core\NetServiceInterface;
 use SpringDvs\Core\ServiceEncoding;
 use SpringDvs\Core\NetServices\Bulletin;
 use SpringDvs\Core\NetServices\BulletinManagerServiceInterface;
-use SpringDvs\Core\NetServiceViewLoader;
+use SpringDvs\Core\NetServiceViewLoaderInterface;
 
 /**
  * The canonical implementation of the Bulletin service which
@@ -41,11 +41,11 @@ implements NetServiceInterface
 	 * 
 	 * @param BulletinManagerServiceInterface $repo The repository to use
 	 * @param LocalNodeInterface $node The local node
-	 * @param NetServiceViewLoader $views The view loader
+	 * @param NetServiceViewLoaderInterface $views The view loader
 	 * @param string $source The source of the response
 	 */
 	public function __construct(BulletinManagerServiceInterface $repo,
-								NetServiceViewLoader $views, LocalNodeInterface $node,
+								NetServiceViewLoaderInterface $views, LocalNodeInterface $node,
 								$source = 'spring') {
 		$this->repo = $repo;
 		$this->node = $node;
@@ -58,8 +58,8 @@ implements NetServiceInterface
 	 * @see \SpringDvs\Core\NetServiceInterface::run()
 	 */
 	public function run($uriPath, $uriQuery) {
-		
-		if(!isset($uriPath[1])) {
+
+		if(!isset($uriPath[1]) || empty($uriPath[1])) {
 			$headers = $this->repo->withFilters($uriQuery);
 			return ServiceEncoding::json($this->encodeHeaderArray($headers),
 					$this->node);

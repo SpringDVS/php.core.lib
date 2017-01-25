@@ -11,7 +11,7 @@ use SpringDvs\Core\NetServiceKeyStore;
 use SpringDvs\Core\NotificationInterface;
 use SpringDvs\Core\NetServices\KeyServiceInterface;
 use SpringDvs\Core\NetServices\OrgProfileManagerServiceInterface;
-use SpringDvs\Core\NetServiceViewLoader;
+use SpringDvs\Core\NetServiceViewLoaderInterface;
 
 class MockReady extends TestCase {
 	
@@ -134,7 +134,7 @@ class MockReady extends TestCase {
 		$methods = [
 				'load'
 		];
-		return $this->getMockBuilder(NetServiceViewLoader::class)
+		return $this->getMockBuilder(NetServiceViewLoaderInterface::class)
 			->setMethods($methods)
 			->getMock();
 	}
