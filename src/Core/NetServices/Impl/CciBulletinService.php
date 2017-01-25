@@ -139,6 +139,9 @@ implements NetServiceInterface
 			case 'web':
 				return ServiceEncoding::text($this->views->load('bulletin.web',
 						['bulletin' => $bulletin]));
+			case 'test':
+					return ServiceEncoding::text($this->views->load('bulletin.test',
+					['bulletin' => $bulletin]));
 			default:
 				return "105"; // Internal error -- View does not exist
 		}
