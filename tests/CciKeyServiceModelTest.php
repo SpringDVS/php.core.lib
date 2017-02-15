@@ -158,12 +158,12 @@ extends MockReady {
 		$this->assertNotNull($cert);
 		$this->assertEquals('Barfoo', $cert->name());
 		$this->assertEquals('bar@example.com', $cert->email());
-		$this->assertEquals('AC093447D6F8889F', $cert->keyid());
+		$this->assertEquals('ac093447d6f8889f', $cert->keyid());
 		
 		$sigs = $cert->signatures();
 		$this->assertCount(1, $sigs);
 		
-		$this->assertEquals('AC093447D6F8889F', $sigs[0]->keyid);
+		$this->assertEquals('ac093447d6f8889f', $sigs[0]->keyid);
 	}
 	
 	/**
@@ -177,12 +177,12 @@ extends MockReady {
 		$this->assertNotNull($cert);
 		$this->assertEquals('Foobar', $cert->name());
 		$this->assertEquals('foo@example.com', $cert->email());
-		$this->assertEquals('D193ECD630086ED1', $cert->keyid());
+		$this->assertEquals('d193ecd630086ed1', $cert->keyid());
 	
 		$sigs = $cert->signatures();
 		$this->assertCount(1, $sigs);
 	
-		$this->assertEquals('D193ECD630086ED1', $sigs[0]->keyid);
+		$this->assertEquals('d193ecd630086ed1', $sigs[0]->keyid);
 	}
 
 	/**
@@ -211,16 +211,16 @@ extends MockReady {
 		$newKey = $pks->sign($oldCertificate, new Key($privateKeyFoobar), 'passphrase');
 		$this->assertNotNull($newKey);
 		
-		$actual = $pks->import($newKey, $oldCertificate);
+		$actual = $pks->update($newKey, $oldCertificate);
 		
 		$this->assertEquals('Barfoo', $actual->name());
 		$this->assertEquals('bar@example.com', $actual->email());
-		$this->assertEquals('AC093447D6F8889F', $actual->keyid());
+		$this->assertEquals('ac093447d6f8889f', $actual->keyid());
 		
 		$sigs = $actual->signatures();
 		$this->assertCount(2, $sigs);
 		
-		$this->assertEquals('AC093447D6F8889F', $sigs[0]->keyid);
-		$this->assertEquals('D193ECD630086ED1', $sigs[1]->keyid);
+		$this->assertEquals('ac093447d6f8889f', $sigs[0]->keyid);
+		$this->assertEquals('d193ecd630086ed1', $sigs[1]->keyid);
 	}
 }

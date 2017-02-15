@@ -78,7 +78,7 @@ class MockReady extends TestCase {
 	
 	protected function mockKeyServiceInterface() {
 		$methods = [
-				'generateKeyPair', 'import',
+				'generateKeyPair', 'update',
 				'expand', 'sign',
 		];
 		return $this->getMockBuilder(KeyServiceInterface::class)

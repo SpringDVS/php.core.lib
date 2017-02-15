@@ -90,6 +90,7 @@ implements NetServiceInterface
 			'uid' => $bulletin->uid(),
 			'content' => $bulletin->content(),
 			'tags' => $bulletin->tags(),
+			'source' => $this->source, // source network of bulletin
 		];
 	}
 	
@@ -104,7 +105,7 @@ implements NetServiceInterface
 				'title' => $header->title(),
 				'uid' => $header->uid(),
 				'tags' => $header->tags(),
-				'source' => $this->source // source network of bulletin
+				'source' => $this->source, // source network of bulletin
 		];
 	}
 	

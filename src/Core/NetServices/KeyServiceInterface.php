@@ -40,23 +40,12 @@ interface KeyServiceInterface {
 	
 	
 	/**
-	 * Import key action
 	 * 
-	 * This will import a key and expand it out into a certificate
-	 * 
-	 * If the import action is against an already existing key, then
-	 * that key is included as the subject. An example of this is when
-	 * a certificate has been signed and the new imformation needs to
-	 * be imported against the old key to update it with the new signatures
-	 * 
-	 * @param \SpringDvs\Core\NetServices\Key $key The key to import
-	 * @param \SpringDvs\Core\NetServices\Key $subject The key to import against (if any)
-	 * @return \SpringDvs\Core\NetServices\Certificate | null
+	 * @param \SpringDvs\Core\NetServices\Key $key
+	 * @param \SpringDvs\Core\NetServices\Key $subject
 	 */
-	public function import(\SpringDvs\Core\NetServices\Key $key,
-						   \SpringDvs\Core\NetServices\Key $subject = null);
-	
-	
+	public function update(\SpringDvs\Core\NetServices\Key $key,
+						   \SpringDvs\Core\NetServices\Key $subject);
 	/**
 	 * Expand a key into a certificate
 	 * 

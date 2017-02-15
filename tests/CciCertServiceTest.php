@@ -233,7 +233,7 @@ extends MockReady
 			->willReturn(false);
 		
 		$this->mKservice->expects($this->once())
-			->method('import')
+			->method('update')
 			->with($nodePublicKey)
 			->willReturn($nodeCertificate);
 
@@ -285,7 +285,7 @@ extends MockReady
 			->with('cert.notify')
 			->willReturn(false);
 	
-		$this->mKservice->expects($this->never())->method('import');	
+		$this->mKservice->expects($this->never())->method('expand');	
 	
 		$this->path[] = 'pullreq';
 		$response = $this->service->run($this->path, ['source' => 'other.venus.uk']);
@@ -331,7 +331,7 @@ extends MockReady
 			->with('cert.notify')
 			->willReturn(false);
 	
-		$this->mKservice->expects($this->never())->method('import');
+		$this->mKservice->expects($this->never())->method('expand');
 	
 		$this->path[] = 'pullreq';
 		$response = $this->service->run($this->path, ['source' => 'other.venus.uk']);
@@ -379,7 +379,7 @@ extends MockReady
 			->with('cert.notify')
 			->willReturn(false);
 	
-		$this->mKservice->expects($this->never())->method('import');
+		$this->mKservice->expects($this->never())->method('expand');
 	
 		$this->path[] = 'pullreq';
 		$response = $this->service->run($this->path, ['source' => 'other.venus.uk']);

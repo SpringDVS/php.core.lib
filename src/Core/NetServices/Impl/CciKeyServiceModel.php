@@ -16,14 +16,15 @@ use SpringDvs\Core\NetServices\Signature;
 class CciKeyServiceModel implements KeyServiceInterface {
 
 	private $service;
-	
+	private $action;
 	/**
 	 * Create a new CIC Key service model
 	 * 
 	 * @param string $service The URL of the service end point
 	 */
-	public function __construct($service = 'https://pkserv.spring-dvs.org/process/') {
+	public function __construct($service = 'https://pkserv.spring-dvs.org') {
 		$this->service = $service;
+		
 	}
 
 	/**
@@ -31,14 +32,17 @@ class CciKeyServiceModel implements KeyServiceInterface {
 	 * @see \SpringDvs\Core\NetServices\KeyServiceInterface::generateKeyPair()
 	 */
 	public function generateKeypair($name, $email, $passphrase) {
-		$body = "KEYGEN\n{$passphrase}\n{$name}\n{$email}\n\n";
-
-		$response =  $this->performRequest($body);
+		$this->action('genkey');
 		
-		if(!$response || $response['public'] == "" || $response['private'] == "") {
-			return null;
-		}
+		$body = json_encode(array(
+			'name' => $name,
+			'email' => $email,
+			'passphrase' => $passphrase
+		));
 		
+		$response =  $this->response($this->performRequest($body));
+		if(!$response){ return null; }
+	
 		$keys['public'] = new Certificate($response['public'], true);
 		$keys['private'] = new Certificate($response['private'], true);
 		
@@ -47,37 +51,21 @@ class CciKeyServiceModel implements KeyServiceInterface {
 
 	/**
 	 * {@inheritDoc}
-	 * @see \SpringDvs\Core\NetServices\KeyServiceInterface::import()
+	 * @see \SpringDvs\Core\NetServices\KeyServiceInterface::update()
 	 */
-	public function import(\SpringDvs\Core\NetServices\Key $key,
-						   \SpringDvs\Core\NetServices\Key $subject = null) {
-		
-		$body = "IMPORT\nPUBLIC {\n{$key->armor()}\n}\n";
-		if($subject) {
-			$body .= "SUBJECT {\n{$subject->armor()}\n}\n";
-		}
+	public function update(\SpringDvs\Core\NetServices\Key $key,
+						   \SpringDvs\Core\NetServices\Key $subject) {
+	   	$this->action('update');
+		$body = json_encode(array(
+			'public' => $key->armor(),
+			'subject' => $subject->armor(),
+		));
 
-		$body .= "\n";
-		$response = $this->performRequest($body);
+		$response = $this->response($this->performRequest($body));
 		
-		// Check if valid
+		
 		if(!$response){ return null; }
-		foreach($response as $k => $v) {
-			if($k == 'sigs'){ continue; } // Skip signatures as my be empty
-			if($v == "") return null; // The rest need something in them
-		}
-		
-		$signatures = [];
-		foreach($response['sigs'] as $sig) {
-			$signatures[] = new Signature($sig);
-		}
-		
-		return new Certificate($response['armor'],
-							   false,
-							   $response['name'],
-							   $response['email'],
-							   $response['keyid'],
-							   $signatures);
+		return $this->expand(new Key($response['public']));
 	}
 
 	/**
@@ -85,7 +73,26 @@ class CciKeyServiceModel implements KeyServiceInterface {
 	 * @see \SpringDvs\Core\NetServices\KeyServiceInterface::expand()
 	 */
 	public function expand(\SpringDvs\Core\NetServices\Key $key) {
-		return $this->import($key);
+		$this->action('expand');
+		$body = json_encode(array(
+				'public' => $key->armor(),
+		));
+		
+		$response = $this->response($this->performRequest($body));
+		if(!$response){ return null; }
+		
+		// Check if valid
+		$signatures = [];
+		foreach($response['sigs'] as $sig) {
+			$signatures[] = new Signature($sig);
+		}
+		
+		return new Certificate($key->armor(),
+				false,
+				$response['name'],
+				$response['email'],
+				$response['keyid'],
+				$signatures);
 	}
 
 	/**
@@ -95,13 +102,23 @@ class CciKeyServiceModel implements KeyServiceInterface {
 	public function sign(\SpringDvs\Core\NetServices\Certificate $certificate,
 						 \SpringDvs\Core\NetServices\Key $key,
 						  $passphrase) {
-		$body = "SIGN\n{$passphrase}\nPUBLIC {\n{$certificate->armor()}\n}\nPRIVATE {\n{$key->armor()}\n}\n";
-		$response = $this->performRequest($body);
-		if(!$response || $response['public'] == "") {
+		$this->action('sign');
+		$body = json_encode(array(
+				'passphrase' => $passphrase,
+				'public' => $certificate->armor(),
+				'private' => $key->armor(),
+		));
+		$response = $this->response($this->performRequest($body));
+
+		return new Key($response['public']);
+	}
+	
+	public function response($result) {
+		if(!$result || !isset($result['result'])
+		|| $result['result'] == 'error' || !isset($result['response'])) {
 			return null;
 		}
-
-		return new Certificate($response['public']);
+		return $result['response'];
 	}
 
 
@@ -115,7 +132,7 @@ class CciKeyServiceModel implements KeyServiceInterface {
 	 */
 	private function performRequest($body) {
 
-		$ch = curl_init($this->service);
+		$ch = curl_init($this->service . '/' . $this->action);
 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
 		curl_setopt($ch, CURLOPT_POST,           1 );
@@ -134,5 +151,9 @@ class CciKeyServiceModel implements KeyServiceInterface {
 		} catch(\Exception $e) {
 			return false;
 		}
+	}
+	
+	private function action($action) {
+		$this->action = $action;
 	}
 }

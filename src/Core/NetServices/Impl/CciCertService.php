@@ -193,7 +193,8 @@ implements NetServiceInterface, CertificatePullInterface
 			$subject = $this->keyring->getNodePublicKey();
 			if(!$subject){ return false; }
 			
-			$certificate = $this->kservice->import($key, $subject);
+			$certificate = $this->kservice->update($key, $subject);
+
 			if(!$certificate){ return false; }
 						
 			$this->keyring->setNodeCertificate($certificate);
